@@ -5,3 +5,4 @@
 * Длина ключа 5-16 символов.
 * Язык написания java.
 ***
+![изображение](https://user-images.githubusercontent.com/84348788/141312583-7d555894-0caf-4f1e-b652-d789eb355d5c.png)
