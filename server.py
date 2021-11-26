@@ -9,15 +9,9 @@ import sys
 import http.client
 from PyQt5 import QtGui, Qt
 lock = threading.RLock()
+# lock=threading.BoundedSemaphore(2)
 ip=""
 port=""
-
-
-
-
-
-
-
 
 class Window(QWidget):
     def __init__(self, parent=None):
@@ -109,71 +103,78 @@ class Window(QWidget):
                 return 1
 
         def func(conn, host, port):
-            lock.acquire()
+
             datchik = 0
+            datch = 0
             mass = []
-            while datchik != 5:
+            while datch != 5:
                 length_of_message = int.from_bytes(conn.recv(2), byteorder='big')
                 msg = conn.recv(length_of_message).decode("UTF-8")
-                if ("112" in msg) and (len(msg) == 3):
-                    datchik = 5
-                if len(msg) > 0 and (datchik == 1 or datchik == 2):
+                if ("112" in msg):
+                    datch = 5
+                if datchik > 0:
                     mass.append(copy.deepcopy(msg))
-                if datchik == 0 and ("flag1" in msg) and len(msg) == 6:
+                if datchik == 0 and ("flag1" in msg):
                     datchik = 1
-                elif datchik == 0 and ("flag2" in msg) and len(msg) == 6:
+                elif datchik == 0 and ("flag2" in msg):
                     datchik = 2
-                elif datchik == 0 and ("flag3" in msg) and len(msg) == 6:
+                elif datchik == 0 and ("flag3" in msg):
                     datchik = 3
-                elif datchik == 0 and ("flag4" in msg) and len(msg) == 6:
+                elif datchik == 0 and ("flag4" in msg):
                     datchik = 4
+            print(datchik)
+            print(mass)
+            lock.acquire()
+            exit_mass=[]
             if datchik == 1:
                 if check_login() == 1:
                     create_reg()
+                rec = select_login(mass[0], mass[1])
+                if len(rec) == 0:
+                    exit_mass.append("error")
+                    exit_mass.append("112")
                 else:
-                    rec = select_login(msg[0], msg[1])
-                    if len(rec) == 0:
-                        rec.append("error")
-                        rec.append("112")
-                    else:
-                        rec.append("112")
-
+                    exit_mass.append("ok")
+                    exit_mass.append("112")
             elif datchik == 2:
                 if check_file() == 1:
                     create_file()
+                rec = select_file(mass[0], mass[1])
+                if len(rec) == 0:
+                    exit_mass.append("error")
+                    exit_mass.append("112")
                 else:
-                    rec = select_file(msg[0], msg[1])
-                    if len(rec) == 0:
-                        rec.append("error")
-                        rec.append("112")
-                    else:
-                        rec.append("112")
+                    for z in range (0,rec[0]):
+                        exit_mass.append(rec[0][z])
+                    exit_mass.append("ok")
+                    exit_mass.append("112")
             elif datchik == 3:
                 if check_login() == 1:
                     create_reg()
+                rec = select_login(mass[0], mass[1])
+                if len(rec) == 0:
+                    insert_login(mass[0], mass[1])
+                    exit_mass.append("ok")
+                    exit_mass.append("112")
                 else:
-                    rec = select_login(msg[0], msg[1])
-                    if len(rec) == 0:
-                        insert_login((msg[0], msg[1]))
-                        rec.append("ok")
-                        rec.append("112")
-                    else:
-                        rec.append("error")
-                        rec.append("112")
+                    exit_mass.append("error")
+                    exit_mass.append("112")
             elif datchik == 4:
                 if check_file() == 1:
                     create_file()
+                rec = select_file(mass[0], mass[1])
+                if len(rec) == 0:
+                    insert_file(mass[0], mass[1], mass[2], mass[3], mass[4], mass[5], mass[6])
+                    exit_mass.append("ok")
+                    exit_mass.append("112")
                 else:
-                    rec = select_file(msg[0], msg[1])
-                    if len(rec) == 0:
-                        insert_file((msg[0], msg[1], msg[2], msg[3], msg[4], msg[5], msg[6]))
-                        rec.append("ok")
-                        rec.append("112")
-                    else:
-                        rec.append("error")
-                        rec.append("112")
-            for i in range(0, len(rec)):
-                message_to_send = rec[i].encode("UTF-8")
+                    exit_mass.append("error")
+                    exit_mass.append("112")
+            print(rec)
+            print(exit_mass)
+            print(conn)
+            for i in range(0, len(exit_mass)):
+                message_to_send = exit_mass[i].encode("UTF-8")
                 conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
                 conn.send(message_to_send)
             lock.release()
