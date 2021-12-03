@@ -9,7 +9,6 @@ import sys
 import http.client
 from PyQt5 import QtGui, Qt
 lock = threading.RLock()
-# lock=threading.BoundedSemaphore(2)
 ip=""
 port=""
 
@@ -259,6 +258,3 @@ if __name__ == '__main__':
     b = Buttons()
     b.show_enter()
     sys.exit(app.exec_())
-
-    # 47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
-    # 47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
