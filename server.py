@@ -9,7 +9,6 @@ import sys
 import http.client
 from PyQt5 import QtGui, Qt
 lock = threading.RLock()
-# lock=threading.BoundedSemaphore(2)
 ip=""
 port=""
 
@@ -40,7 +39,7 @@ class Window(QWidget):
         def select_file(login, hash):
             conn = sqlite3.connect("database.db")
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM file WHERE login='" + login + "' AND pass='" + hash + "'")
+            cursor.execute("SELECT * FROM file WHERE login='" + login + "' AND hash='" + hash + "'")
             records = cursor.fetchall()
             cursor.close()
             return records
@@ -110,7 +109,7 @@ class Window(QWidget):
             while datch != 5:
                 length_of_message = int.from_bytes(conn.recv(2), byteorder='big')
                 msg = conn.recv(length_of_message).decode("UTF-8")
-                if ("112" in msg):
+                if ("112" in msg) and len(msg)==3 and (len(mass)==2 or len(mass)==7):
                     datch = 5
                 if datchik > 0:
                     mass.append(copy.deepcopy(msg))
@@ -144,7 +143,9 @@ class Window(QWidget):
                     exit_mass.append("error")
                     exit_mass.append("112")
                 else:
-                    for z in range (0,rec[0]):
+                    print()
+                    print(rec)
+                    for z in range (2,len(rec[0])):
                         exit_mass.append(rec[0][z])
                     exit_mass.append("ok")
                     exit_mass.append("112")
