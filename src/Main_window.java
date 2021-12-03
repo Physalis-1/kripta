@@ -13,7 +13,7 @@ import java.security.SecureRandom;
 public class Main_window extends JFrame {
     private String path1="";
     private String path2="";
-    Main_window(String ip, int port)
+    Main_window(String ip, int port, String loginss)
     {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
@@ -31,12 +31,6 @@ public class Main_window extends JFrame {
         textField.setHorizontalAlignment(JTextField.LEFT);
         box.add(textField);
         getContentPane().add(box);
-//        JLabel label3 = new JLabel("Ключ");
-//        box.add(label3);
-//        JPasswordField passwordField = new JPasswordField(20);
-//        passwordField.setEchoChar('$');
-//        box.add(passwordField);
-//        getContentPane().add(box);
 
         JLabel label = new JLabel("выбранный файл");
         box.add(label);
@@ -88,7 +82,7 @@ public class Main_window extends JFrame {
                 }
 
                 try {
-                    Enc enc = new Enc(index, textField.getText(), b, path1,vector);
+                    Enc enc = new Enc(index, textField.getText(), b, path1,vector,ip,port,loginss);
                 } catch (Exception e1) {
                     JFrame jFrame = new JFrame();
                     JOptionPane.showMessageDialog(jFrame, "ERROR!!!");
@@ -158,7 +152,7 @@ public class Main_window extends JFrame {
             {
                 if (textField21.getText().length()>0) {
                     try {
-                        Dec dec = new Dec(textField21.getText(), path1, path2);
+                        Dec dec = new Dec(textField21.getText(), path1, path2,ip,port,loginss);
                     } catch (Exception e1) {
                         JFrame jFrame = new JFrame();
                         JOptionPane.showMessageDialog(jFrame, "!!!ERROR!!!");
