@@ -11,6 +11,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class Start_window extends JFrame {
     private String log="";
@@ -23,34 +24,34 @@ public class Start_window extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         Box box = Box.createVerticalBox();
-        JLabel label_log = new JLabel("Логин");
+        JLabel label_log = new JLabel("Р›РѕРіРёРЅ");
         box.add(label_log);
         JTextField logField = new JTextField( 20);
         logField.setHorizontalAlignment(JTextField.LEFT);
         box.add(logField);
         getContentPane().add(box);
-        JLabel label_pasw = new JLabel("Пароль");
+        JLabel label_pasw = new JLabel("РџР°СЂРѕР»СЊ");
         box.add(label_pasw);
         JPasswordField passwordField = new JPasswordField(20);
         passwordField.setEchoChar('$');
         box.add(passwordField);
         getContentPane().add(box);
 
-        JLabel label_ip = new JLabel("IP-Адрес");
+        JLabel label_ip = new JLabel("IP-РђРґСЂРµСЃ");
         box.add(label_ip);
         JTextField ipField = new JTextField( 20);
         ipField.setHorizontalAlignment(JTextField.LEFT);
         box.add(ipField);
         getContentPane().add(box);
 
-        JLabel label_port = new JLabel("ПОРТ");
+        JLabel label_port = new JLabel("РџРћР Рў");
         box.add(label_port);
         JTextField portField = new JTextField( 20);
         portField.setHorizontalAlignment(JTextField.LEFT);
         box.add(portField);
         getContentPane().add(box);
 
-        JButton enter_button = new JButton("Войти");
+        JButton enter_button = new JButton("Р’РѕР№С‚Рё");
         enter_button.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -59,74 +60,75 @@ public class Start_window extends JFrame {
                 String [] massiv=new String[3];
                 massiv[0]="flag1";
                 massiv[1]=logField.getText();
-                massiv[2]=passwordField.getText();
-//                MessageDigest md = null;
-//                try {
-//                    md = MessageDigest.getInstance("SHA-256");
-//                    md.update(passwordField.getText().getBytes(StandardCharsets.UTF_8));
-//                    byte[] digest = md.digest();
-//                    String psw = new String(digest, "UTF-8");
-//                    massiv[2]=psw;
-//                } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-//                    ex.printStackTrace();
-//                }
+//                massiv[2]=passwordField.getText();
+                MessageDigest md = null;
+                try {
+                    md = MessageDigest.getInstance("SHA-256");
+                    System.out.println(passwordField.getText());
+                    md.update(passwordField.getText().trim().getBytes(StandardCharsets.UTF_8));
+                    byte[] digest = md.digest();
+                    String psw = Base64.getEncoder().encodeToString(digest);
+                    massiv[2]=psw;
+                } catch (NoSuchAlgorithmException ex) {
+                    ex.printStackTrace();
+                }
                 try
                 {
                     int ports = Integer.parseInt(portField.getText().trim());
                     ArrayList<String> array =client.select(ipField.getText(),ports,massiv);
                     if (array.get(0).equals("ok")) {
                         setVisible(false);
-                        Main_window main_wind= new Main_window(ipField.getText(),ports);
+                        Main_window main_wind= new Main_window(ipField.getText(),ports,logField.getText());
                     }
                     else if (array.get(0).equals("error"))
                     {
-                        JOptionPane.showMessageDialog(null, "регистрация неудачна\n введите другой логин");
+                        JOptionPane.showMessageDialog(null, "РІС…РѕРґ РЅРµСѓРґР°С‡РµРЅ\n РІРІРµРґРёС‚Рµ РґСЂСѓРіРѕР№ Р»РѕРіРёРЅ\n РёР»Рё РїР°СЂРѕР»СЊ");
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "соединение не установлено\n введены неправильные данные\n или сервер недоступен");
+                        JOptionPane.showMessageDialog(null, "СЃРѕРµРґРёРЅРµРЅРёРµ РЅРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ\n РІРІРµРґРµРЅС‹ РЅРµРїСЂР°РІРёР»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ\n РёР»Рё СЃРµСЂРІРµСЂ РЅРµРґРѕСЃС‚СѓРїРµРЅ");
                     }
                 }
                 catch (NumberFormatException nfe)
                 {
-                    JOptionPane.showMessageDialog(null, "Порт состоит только из цифр");
+                    JOptionPane.showMessageDialog(null, "РџРѕСЂС‚ СЃРѕСЃС‚РѕРёС‚ С‚РѕР»СЊРєРѕ РёР· С†РёС„СЂ");
                 }
 
             }
         });
         box.add(enter_button);
         panel.add(box);
-        tabbedPane.addTab("Вход", box);
+        tabbedPane.addTab("Р’С…РѕРґ", box);
         getContentPane().add(tabbedPane);
 
         Box box1 = Box.createVerticalBox();
-        JLabel label_log1 = new JLabel("Логин");
+        JLabel label_log1 = new JLabel("Р›РѕРіРёРЅ");
         box1.add(label_log1);
         JTextField logField1 = new JTextField( 20);
         logField1.setHorizontalAlignment(JTextField.LEFT);
         box1.add(logField1);
         getContentPane().add(box1);
-        JLabel label_pasw1 = new JLabel("Пароль");
+        JLabel label_pasw1 = new JLabel("РџР°СЂРѕР»СЊ");
         box1.add(label_pasw1);
         JPasswordField passwordField1 = new JPasswordField(20);
         passwordField1.setEchoChar('$');
         box1.add(passwordField1);
         getContentPane().add(box1);
 
-        JLabel label_ip1 = new JLabel("IP-Адрес");
+        JLabel label_ip1 = new JLabel("IP-РђРґСЂРµСЃ");
         box1.add(label_ip1);
         JTextField ipField1 = new JTextField( 20);
         ipField1.setHorizontalAlignment(JTextField.LEFT);
         box1.add(ipField1);
         getContentPane().add(box1);
 
-        JLabel label_port1 = new JLabel("ПОРТ");
+        JLabel label_port1 = new JLabel("РџРћР Рў");
         box1.add(label_port1);
         JTextField portField1 = new JTextField( 20);
         portField1.setHorizontalAlignment(JTextField.LEFT);
         box1.add(portField1);
         getContentPane().add(box1);
 
-        JButton reg_button = new JButton("Регистрация");
+        JButton reg_button = new JButton("Р РµРіРёСЃС‚СЂР°С†РёСЏ");
         reg_button.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -135,42 +137,42 @@ public class Start_window extends JFrame {
                 String [] massiv=new String[3];
                 massiv[0]="flag3";
                 massiv[1]=logField1.getText();
-                massiv[2]=passwordField.getText();
-//                MessageDigest md = null;
-//                try {
-//                    md = MessageDigest.getInstance("SHA-256");
-//                    md.update(passwordField.getText().getBytes(StandardCharsets.UTF_8));
-//                    byte[] digest = md.digest();
-//                    String psw = new String(digest, StandardCharsets.UTF_8);
-//                    massiv[2]=psw;
-//                } catch (NoSuchAlgorithmException ex) {
-//                    ex.printStackTrace();
-//                }
+                MessageDigest md = null;
+                try {
+                    md = MessageDigest.getInstance("SHA-256");
+                    System.out.println(passwordField1.getText());
+                    md.update(passwordField1.getText().trim().getBytes(StandardCharsets.UTF_8));
+                    byte[] digest = md.digest();
+                    String psw = Base64.getEncoder().encodeToString(digest);
+                    massiv[2]=psw;
+                } catch (NoSuchAlgorithmException ex) {
+                    ex.printStackTrace();
+                }
                 try
                 {
                     int ports = Integer.parseInt(portField1.getText().trim());
                     ArrayList<String> array =client.select(ipField1.getText(),ports,massiv);
                     if (array.get(0).equals("ok")) {
-                        JOptionPane.showMessageDialog(null, "регистрация прошла успешно");
+                        JOptionPane.showMessageDialog(null, "СЂРµРіРёСЃС‚СЂР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ");
                     }
                     else if (array.get(0).equals("error"))
                     {
-                        JOptionPane.showMessageDialog(null, "регистрация неудачна\n введите другой логин");
+                        JOptionPane.showMessageDialog(null, "СЂРµРіРёСЃС‚СЂР°С†РёСЏ РЅРµСѓРґР°С‡РЅР°\n РІРІРµРґРёС‚Рµ РґСЂСѓРіРѕР№ Р»РѕРіРёРЅ");
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "соединение не установлено\n введены неправильные данные\n или сервер недоступен");
+                        JOptionPane.showMessageDialog(null, "СЃРѕРµРґРёРЅРµРЅРёРµ РЅРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ\n РІРІРµРґРµРЅС‹ РЅРµРїСЂР°РІРёР»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ\n РёР»Рё СЃРµСЂРІРµСЂ РЅРµРґРѕСЃС‚СѓРїРµРЅ");
                     }
                 }
                 catch (NumberFormatException nfe)
                 {
-                    JOptionPane.showMessageDialog(null, "Порт состоит только из цифр");
+                    JOptionPane.showMessageDialog(null, "РџРѕСЂС‚ СЃРѕСЃС‚РѕРёС‚ С‚РѕР»СЊРєРѕ РёР· С†РёС„СЂ");
                 }
 
             }
         });
         box1.add(reg_button);
         panel.add(box1);
-        tabbedPane.addTab("Регистрация", box1);
+        tabbedPane.addTab("Р РµРіРёСЃС‚СЂР°С†РёСЏ", box1);
         getContentPane().add(tabbedPane);
         setSize(350,250);
         setVisible(true);
