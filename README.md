@@ -9,7 +9,7 @@
 * Запуск криптосистемы на данном этапе осуществляется через Main.java, запуск сервера с бд через server.py
 ***
 * Вид интерфейса входа/регистрации    
-![изображение](https://user-images.githubusercontent.com/84348788/144586415-2d8dd0a2-0af2-433c-ae48-9ac4b86997f9.png)
+![изображение](https://user-images.githubusercontent.com/84348788/144586564-47f4d275-6327-4a70-8b69-c104fd8ef8af.png)
 ![изображение](https://user-images.githubusercontent.com/84348788/144586441-e2095acc-70c8-43be-a806-11bbde45ffb2.png)
 
 * Вид интерфейса шифрования  
