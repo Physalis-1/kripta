@@ -1,6 +1,7 @@
 # 1-таблица с пользователями (логин,пароль)
 # 2-таблица с файлами (логин, хэшфайла(первые 256 бит),Km,Kr,вектор,остаток,длинна ключа )
 import copy
+import os
 import sqlite3
 import socket
 import threading
@@ -9,6 +10,7 @@ import sys
 import http.client
 from PyQt5 import QtGui, Qt
 lock = threading.RLock()
+# lock=threading.BoundedSemaphore(2)
 ip=""
 port=""
 
@@ -194,6 +196,12 @@ class Window(QWidget):
                 threading.Thread(target=func, args=(conn, addr[0], addr[1])).start()
 
         threading.Thread(target=f).start()
+
+    def closeEvent(self, event):
+        os.exit()
+
+
+
 class Example(QWidget):
 
     def __init__(self):
@@ -229,7 +237,6 @@ class Example(QWidget):
         self.log.move(10, 120)
 
         self.btn = QPushButton('Установить настройки', self)
-        # self.btn.clicked.connect(self.button_sigin)
         self.btn.resize(self.btn.sizeHint())
         self.btn.move(10, 160)
         self.setGeometry(300, 300, 300, 200)
@@ -258,3 +265,4 @@ if __name__ == '__main__':
     b = Buttons()
     b.show_enter()
     sys.exit(app.exec_())
+
