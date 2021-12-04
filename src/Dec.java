@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -10,14 +11,10 @@ import java.util.Arrays;
 import java.util.Base64;
 
 public class Dec {
-    public  Dec (String name_file, String path1,String path2,String ip, int port, String loginss) throws Exception {
-
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(path2));
+    public  Dec (String name_file, String path1,String ip, int port, String loginss) throws Exception {
         int [] m=new int[16];
         int [] r=new int[16];
         byte [] vector=new byte[8];
-//        int [] vector=new int[8];
-        int symbol = bufferedReader.read();
         String c="";
         int datchik=0;
         int i=0;
@@ -117,6 +114,22 @@ public class Dec {
         {
             cel= (file.length()/bufer)+1;
         }
+
+
+        JFrame jFrame = new JFrame();
+        JDialog box1 = new JDialog(jFrame);
+        box1.setUndecorated(true);
+        box1.setLayout(new FlowLayout(FlowLayout.CENTER));
+        box1.setBounds(800, 400, 170, 80);
+        JLabel jLabel = new JLabel("ШИФРОВАНИЕ");
+        jLabel.setFont(new Font("Serif", Font.PLAIN, 24));
+        box1.add(jLabel);
+        JProgressBar progressBar2 = new JProgressBar();
+        progressBar2.setStringPainted(true);
+        progressBar2.setMinimum(0);
+        progressBar2.setMaximum((int) cel);
+        box1.add(progressBar2);
+        box1.setVisible(true);
         for (int q = 0; q < cel; q++) {
             if (q!=cel-1){
                 if (inputStream.available()<bufer) bufer= inputStream.available();
@@ -132,9 +145,14 @@ public class Dec {
                 byte[] message2 = cast.mes_2((byte[]) text1[0], ost,bufer);
                 fos.write(message2);
             }
+            progressBar2.setValue(q);
+
 
         }
+        box1.setVisible(false);
         fos.close();
+        inputStream.close();
+
 
 
     }}
