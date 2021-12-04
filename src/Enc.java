@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -8,7 +9,12 @@ import java.util.Arrays;
 import java.util.Base64;
 
 public class Enc {
-    public Enc (int index, String name_file, byte [] key, String path1, byte [] vector, String ip, int port, String loginss) throws Exception {
+    public Enc(int index, String name_file, byte[] key, String path1, byte[] vector, String ip, int port, String loginss, Integer flag) throws Exception {
+        System.out.println();
+        System.out.println();
+        System.out.println(name_file);
+        System.out.println(path1);
+
         int k = 0;
         File file = new File(path1);
         FileOutputStream fos = new FileOutputStream(name_file);
@@ -16,12 +22,52 @@ public class Enc {
         Object[] keys= castEnc.makeKey();
         int [] Km=(int[])keys[0];
         int [] Kr=(int[])keys[1];
+        System.out.println("tt");
         byte [] vec= Arrays.copyOf(vector,8);
+        System.out.println("tt");
+        if (flag==1)
+        {
+            JFrame jFrame = new JFrame();
+            JDialog box = new JDialog(jFrame);
+            box.setUndecorated(true);
+            box.setLayout(new FlowLayout(FlowLayout.CENTER));
+            box.setBounds(800, 400, 170, 80);
+            JLabel jLabel = new JLabel("АРХИВАЦИЯ");
+            jLabel.setFont(new Font("Serif", Font.PLAIN, 24));
+            box.add(jLabel);
+            JProgressBar progressBar1 = new JProgressBar();
+            progressBar1.setIndeterminate(true);
+            box.add(progressBar1);
+            box.setVisible(true);
+            new ZipUtil(path1);
+            path1="temp_archive.zip";
+            System.out.println("u");
+            box.setVisible(false);
+        }
+        System.out.println("u1");
         FileInputStream inputStream = new FileInputStream(path1);
         int bufer=64000;
         long ost=file.length()%bufer;
         int datch=0;
         String hash="";
+
+        long bar_len=(file.length()/bufer)+1;
+
+        JFrame jFrame = new JFrame();
+        JDialog box1 = new JDialog(jFrame);
+        box1.setUndecorated(true);
+        box1.setLayout(new FlowLayout(FlowLayout.CENTER));
+        box1.setBounds(800, 400, 170, 80);
+        JLabel jLabel = new JLabel("ШИФРОВАНИЕ");
+        jLabel.setFont(new Font("Serif", Font.PLAIN, 24));
+        box1.add(jLabel);
+        JProgressBar progressBar2 = new JProgressBar();
+        progressBar2.setStringPainted(true);
+        progressBar2.setMinimum(0);
+        progressBar2.setMaximum((int) bar_len);
+        box1.add(progressBar2);
+        box1.setVisible(true);
+
         while (inputStream.available()>0){
             byte[] message = new byte[64000];
             if (inputStream.available()<bufer) bufer= inputStream.available();
@@ -44,8 +90,19 @@ public class Enc {
                 datch = datch + 1;
             }
 
+            progressBar2.setValue(progressBar2.getValue()+1);
         }
+        box1.setVisible(false);
         fos.close();
+        inputStream.close();
+        if (flag==1){
+            file = new File(path1);
+            file.delete();
+        }
+
+
+
+
         Client client = new Client();
         String [] massiv=new String[8];
         massiv[0]="flag4";
