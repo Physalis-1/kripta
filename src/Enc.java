@@ -9,65 +9,28 @@ import java.util.Arrays;
 import java.util.Base64;
 
 public class Enc {
-    public Enc(int index, String name_file, byte[] key, String path1, byte[] vector, String ip, int port, String loginss, Integer flag) throws Exception {
-        System.out.println();
-        System.out.println();
-        System.out.println(name_file);
-        System.out.println(path1);
+    public Enc(int index, String name_file, byte[] key, String path1, byte[] vector, String ip, int port, String loginss, Integer flag, JFrame jFrame1) throws Exception {
 
         int k = 0;
-        File file = new File(path1);
-        FileOutputStream fos = new FileOutputStream(name_file);
         Cast_enc castEnc = new Cast_enc(key);
         Object[] keys= castEnc.makeKey();
         int [] Km=(int[])keys[0];
         int [] Kr=(int[])keys[1];
-        System.out.println("tt");
         byte [] vec= Arrays.copyOf(vector,8);
-        System.out.println("tt");
         if (flag==1)
         {
-            JFrame jFrame = new JFrame();
-            JDialog box = new JDialog(jFrame);
-            box.setUndecorated(true);
-            box.setLayout(new FlowLayout(FlowLayout.CENTER));
-            box.setBounds(800, 400, 170, 80);
-            JLabel jLabel = new JLabel("АРХИВАЦИЯ");
-            jLabel.setFont(new Font("Serif", Font.PLAIN, 24));
-            box.add(jLabel);
-            JProgressBar progressBar1 = new JProgressBar();
-            progressBar1.setIndeterminate(true);
-            box.add(progressBar1);
-            box.setVisible(true);
+            JOptionPane.showMessageDialog(null, "Начинаем архивацию\n");
             new ZipUtil(path1);
             path1="temp_archive.zip";
-            System.out.println("u");
-            box.setVisible(false);
         }
-        System.out.println("u1");
+        File file = new File(path1);
+        FileOutputStream fos = new FileOutputStream(name_file);
         FileInputStream inputStream = new FileInputStream(path1);
         int bufer=64000;
         long ost=file.length()%bufer;
         int datch=0;
         String hash="";
-
-        long bar_len=(file.length()/bufer)+1;
-
-        JFrame jFrame = new JFrame();
-        JDialog box1 = new JDialog(jFrame);
-        box1.setUndecorated(true);
-        box1.setLayout(new FlowLayout(FlowLayout.CENTER));
-        box1.setBounds(800, 400, 170, 80);
-        JLabel jLabel = new JLabel("ШИФРОВАНИЕ");
-        jLabel.setFont(new Font("Serif", Font.PLAIN, 24));
-        box1.add(jLabel);
-        JProgressBar progressBar2 = new JProgressBar();
-        progressBar2.setStringPainted(true);
-        progressBar2.setMinimum(0);
-        progressBar2.setMaximum((int) bar_len);
-        box1.add(progressBar2);
-        box1.setVisible(true);
-
+        JOptionPane.showMessageDialog(null, "Начинаем шифрование\n");
         while (inputStream.available()>0){
             byte[] message = new byte[64000];
             if (inputStream.available()<bufer) bufer= inputStream.available();
@@ -90,9 +53,7 @@ public class Enc {
                 datch = datch + 1;
             }
 
-            progressBar2.setValue(progressBar2.getValue()+1);
         }
-        box1.setVisible(false);
         fos.close();
         inputStream.close();
         if (flag==1){
@@ -101,42 +62,40 @@ public class Enc {
         }
 
 
-
-
         Client client = new Client();
         String [] massiv=new String[8];
+        String l1=String.valueOf(loginss.charAt(0));
+        aes_enc ae= new aes_enc();
         massiv[0]="flag4";
-        massiv[1]=loginss;
-        massiv[2]=hash;
+        MessageDigest md1 = null;
+        try {
+            md1 = MessageDigest.getInstance("SHA-256");
+            md1.update(loginss.getBytes(StandardCharsets.UTF_8));
+            byte[] digest = md1.digest();
+            String psw1 = Base64.getEncoder().encodeToString(digest);
+            massiv[1] = ae.aes_e(loginss,l1,psw1);
+        } catch (NoSuchAlgorithmException ex1) {
+            ex1.printStackTrace();
+        }
+        massiv[2]= ae.aes_e(loginss,l1,hash);
         String stroka="";
         for (int i = 0; i < (Km.length); i++){
             stroka=stroka+String.valueOf(Km[i])+"|";
         }
-        massiv[3]=stroka;
+        massiv[3]=ae.aes_e(loginss,l1,stroka);
         stroka="";
         for (int i = 0; i < (Km.length); i++){
             stroka=stroka+String.valueOf(Kr[i])+"|";
         }
-        massiv[4]=stroka;
+        massiv[4]=ae.aes_e(loginss,l1,stroka);
         stroka="";
         for (int i = 0; i < (vec.length); i++){
             stroka=stroka+String.valueOf(vec[i])+"|";
         }
-        massiv[5]=stroka;
-        massiv[6]=String.valueOf(ost);
-        massiv[7]=String.valueOf(key.length);
-        System.out.println();
-        System.out.println();
-        System.out.println("/////////////////////////////////////////////////////////////");
-        for (int i = 0; i < (massiv.length); i++){
-            System.out.println(massiv[i]);
-        }
-        System.out.println("/////////////////////////////////////////////////////////////");
-        System.out.println();
-        System.out.println();
-
+        massiv[5]=ae.aes_e(loginss,l1,stroka);
+        massiv[6]=ae.aes_e(loginss,l1,String.valueOf(ost));
+        massiv[7]=ae.aes_e(loginss,l1,String.valueOf(key.length));
         ArrayList<String> array =client.select(ip,port,massiv);
-        System.out.println(array.get(0));
         if (array.get(0).equals("ok")) {
             JOptionPane.showMessageDialog(null, "Данные добавлены в БД\n");
         }
