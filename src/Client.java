@@ -40,7 +40,4 @@ public class Client {
         }
     return arrayList;
      }
-
-
 }
-
