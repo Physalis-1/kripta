@@ -15,30 +15,34 @@
 ![изображение](https://user-images.githubusercontent.com/84348788/144759068-7a2c05aa-03eb-4bbe-af1d-feff9bdb0d7d.png)
 ![изображение](https://user-images.githubusercontent.com/84348788/144759099-3e5992b9-8e4c-4a3a-b39f-a48063409ff8.png)
 
-* Вид интерфейса входа
+* Вид интерфейса входа     
 ![изображение](https://user-images.githubusercontent.com/84348788/144759120-e194b6dc-34be-4911-8688-3b91fa474fb4.png)
 
 * Вид интерфейса регистрации    
 ![изображение](https://user-images.githubusercontent.com/84348788/144759132-6eb4a619-23c7-491f-abfa-374e1f2e9be8.png)
 
-* Вид интерфейса шифрования  
+* Вид интерфейса шифрования     
 ![изображение](https://user-images.githubusercontent.com/84348788/144759161-bcdb0234-efd2-4e07-9ffb-7d6fc53f4189.png)
 
-  
-* Вид интерфейса расшифровывания  
-
+* Вид интерфейса расшифровывания   
+![изображение](https://user-images.githubusercontent.com/84348788/144759311-acef691d-dd78-4396-834d-d83b64309912.png)
    
 * Пример выбора файла    
-
+![изображение](https://user-images.githubusercontent.com/84348788/144759320-850d57c8-8fd4-43da-9359-04f601029712.png)
 
 * Пример выбора папки/директории    
+![изображение](https://user-images.githubusercontent.com/84348788/144759337-f8430c52-c551-47ab-928f-e10847045b82.png)
 
+* Выбор длины ключа    
+![изображение](https://user-images.githubusercontent.com/84348788/144759349-cbdaf837-ea87-4b96-b456-8686a321c6a7.png)
 
-* Выбор длины ключа  
-
+* Выбор типа шифруемого объекта    
+![изображение](https://user-images.githubusercontent.com/84348788/144759377-d9e1d044-b596-462b-80cd-fb11f0e3eba2.png)
 
 * Пример информационных сообщений
- 
+ ![изображение](https://user-images.githubusercontent.com/84348788/144759396-12bea22a-540b-46a2-afb0-f6ff6429acfc.png)
+![изображение](https://user-images.githubusercontent.com/84348788/144759400-0f0b1468-6f47-4809-9a9f-54e449304703.png)
+![изображение](https://user-images.githubusercontent.com/84348788/144759493-2bd8b718-c58d-4a80-aede-020b89aa388f.png)
  
 * Интерфейс сервера   
 ![изображение](https://user-images.githubusercontent.com/84348788/144584746-bf970947-0ded-4c60-adaa-7febb9728afa.png)
