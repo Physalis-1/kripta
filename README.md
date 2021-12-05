@@ -40,8 +40,7 @@
 ![изображение](https://user-images.githubusercontent.com/84348788/144759377-d9e1d044-b596-462b-80cd-fb11f0e3eba2.png)
 
 * Пример информационных сообщений     
- ![изображение](https://user-images.githubusercontent.com/84348788/144759396-12bea22a-540b-46a2-afb0-f6ff6429acfc.png)
-![изображение](https://user-images.githubusercontent.com/84348788/144759400-0f0b1468-6f47-4809-9a9f-54e449304703.png)
+![изображение](https://user-images.githubusercontent.com/84348788/144759396-12bea22a-540b-46a2-afb0-f6ff6429acfc.png)
 ![изображение](https://user-images.githubusercontent.com/84348788/144759493-2bd8b718-c58d-4a80-aede-020b89aa388f.png)
  
 * Интерфейс сервера   
