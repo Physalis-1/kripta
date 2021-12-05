@@ -72,11 +72,19 @@ public class Start_window extends JFrame {
                     Client client = new Client();
                     String[] massiv = new String[3];
                     massiv[0] = "flag1";
-                    massiv[1] = logField.getText().replaceAll(" ", "");
+                    MessageDigest md1 = null;
+                    try {
+                        md1 = MessageDigest.getInstance("SHA-256");
+                        md1.update(logField.getText().replaceAll(" ", "").getBytes(StandardCharsets.UTF_8));
+                        byte[] digest = md1.digest();
+                        String psw1 = Base64.getEncoder().encodeToString(digest);
+                        massiv[1] = psw1;
+                    } catch (NoSuchAlgorithmException ex1) {
+                        ex1.printStackTrace();
+                    }
                     MessageDigest md = null;
                     try {
                         md = MessageDigest.getInstance("SHA-256");
-                        System.out.println(passwordField.getText().replaceAll(" ", ""));
                         md.update(passwordField.getText().replaceAll(" ", "").getBytes(StandardCharsets.UTF_8));
                         byte[] digest = md.digest();
                         String psw = Base64.getEncoder().encodeToString(digest);
@@ -164,11 +172,19 @@ public class Start_window extends JFrame {
                     Client client = new Client();
                     String[] massiv = new String[3];
                     massiv[0] = "flag3";
-                    massiv[1] = logField1.getText().replaceAll(" ", "");
+                    MessageDigest md1 = null;
+                    try {
+                        md1 = MessageDigest.getInstance("SHA-256");
+                        md1.update(logField1.getText().replaceAll(" ", "").getBytes(StandardCharsets.UTF_8));
+                        byte[] digest = md1.digest();
+                        String psw1 = Base64.getEncoder().encodeToString(digest);
+                        massiv[1] = psw1;
+                    } catch (NoSuchAlgorithmException ex1) {
+                        ex1.printStackTrace();
+                    }
                     MessageDigest md = null;
                     try {
                         md = MessageDigest.getInstance("SHA-256");
-                        System.out.println(passwordField1.getText().replaceAll(" ", ""));
                         md.update(passwordField1.getText().replaceAll(" ", "").getBytes(StandardCharsets.UTF_8));
                         byte[] digest = md.digest();
                         String psw = Base64.getEncoder().encodeToString(digest);
@@ -207,6 +223,9 @@ public class Start_window extends JFrame {
         JLabel lab3 = new JLabel(" * Для шифрования папки/директории создается zip архив" );
         JLabel lab4 = new JLabel(" * При расшифровывании папки/директории создается zip архив" );
         JLabel lab5 = new JLabel(" * Программа состоит из клиентской и серверной части");
+        JLabel lab6 = new JLabel(" * Программа поддерижвает пользовательские пароли любой длинны, однако ставя");
+        JLabel lab7 = new JLabel(" легкие пароли помните, что их легко взломать");
+        JLabel lab8 = new JLabel(" * Расшифровывая папки/директории нужно дописывать расширение zip");
 
         lab.setFont(new Font("Serif", Font.PLAIN, 24));
         lab1.setFont(new Font("Serif", Font.PLAIN, 15));
@@ -214,12 +233,20 @@ public class Start_window extends JFrame {
         lab3.setFont(new Font("Serif", Font.PLAIN, 15));
         lab4.setFont(new Font("Serif", Font.PLAIN, 15));
         lab5.setFont(new Font("Serif", Font.PLAIN, 15));
+        lab6.setFont(new Font("Serif", Font.PLAIN, 15));
+        lab7.setFont(new Font("Serif", Font.PLAIN, 15));
+        lab8.setFont(new Font("Serif", Font.PLAIN, 15));
+
         box2.add(lab);
         box2.add(lab1);
         box2.add(lab2);
         box2.add(lab3);
         box2.add(lab4);
         box2.add(lab5);
+        box2.add(lab6);
+        box2.add(lab7);
+        box2.add(lab8);
+
         box2.setBackground(Color.decode("#E6E6FA"));
         tabbedPane.addTab("СПРАВКА", box2);
         tabbedPane.setBackground(Color.decode("#E6E6FA"));
