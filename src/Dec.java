@@ -36,13 +36,26 @@ public class Dec {
         } catch (NoSuchAlgorithmException ex) {
             ex.printStackTrace();
         }
+
         Client client = new Client();
         String [] massiv=new String[3];
+        String l1=String.valueOf(loginss.charAt(0));
+        aes_dec ad= new aes_dec();
+        aes_enc ae= new aes_enc();
         massiv[0]="flag2";
-        massiv[1]=loginss;
-        massiv[2]=hash;
+        MessageDigest md1 = null;
+        try {
+            md1 = MessageDigest.getInstance("SHA-256");
+            md1.update(loginss.getBytes(StandardCharsets.UTF_8));
+            byte[] digest = md1.digest();
+            String psw1 = Base64.getEncoder().encodeToString(digest);
+            massiv[1] = ae.aes_e(loginss,l1,psw1);
+        } catch (NoSuchAlgorithmException ex1) {
+            ex1.printStackTrace();
+        }
+
+        massiv[2]=ae.aes_e(loginss,l1,hash);
         ArrayList<String> array =client.select(ip,port,massiv);
-        System.out.println(array.get(0));
         if (array.get(0).equals("error")){
             JOptionPane.showMessageDialog(null, "Данных нет");
         }
@@ -52,7 +65,7 @@ public class Dec {
         }
 
         String stro="";
-        stro=array.get(0);
+        stro=ad.aes_d(loginss,l1,array.get(0));
         for (int j = 0; j < stro.length(); j++) {
             if (stro.charAt(j)=='|'){
                 m[i]=Integer.parseInt(c.trim());
@@ -65,7 +78,7 @@ public class Dec {
             }
         }
         i=0;
-        stro=array.get(1);
+        stro=ad.aes_d(loginss,l1,array.get(1));
         c="";
         for (int j = 0; j < stro.length(); j++) {
             if (stro.charAt(j)=='|'){
@@ -79,7 +92,7 @@ public class Dec {
             }
         }
         i=0;
-        stro=array.get(2);
+        stro=ad.aes_d(loginss,l1,array.get(2));
         c="";
         for (int j = 0; j < stro.length(); j++) {
             if (stro.charAt(j)=='|'){
@@ -92,14 +105,8 @@ public class Dec {
                 c=c+stro.charAt(j);
             }
         }
-        ost=Integer.parseInt(array.get(3).trim());
-        key_len=Integer.parseInt(array.get(4).trim());
-        System.out.println(array.get(0));
-        System.out.println(array.get(1));
-        System.out.println(array.get(2));
-        System.out.println(array.get(3));
-        System.out.println(array.get(4));
-
+        ost=Integer.parseInt(ad.aes_d(loginss,l1,array.get(3)));
+        key_len=Integer.parseInt(ad.aes_d(loginss,l1,array.get(4)));
         Cast_dec cast = new Cast_dec(key_len);
         FileOutputStream fos = new FileOutputStream(name_file);
         byte [] vec= Arrays.copyOf(vector,8);
@@ -115,21 +122,6 @@ public class Dec {
             cel= (file.length()/bufer)+1;
         }
 
-
-        JFrame jFrame = new JFrame();
-        JDialog box1 = new JDialog(jFrame);
-        box1.setUndecorated(true);
-        box1.setLayout(new FlowLayout(FlowLayout.CENTER));
-        box1.setBounds(800, 400, 170, 80);
-        JLabel jLabel = new JLabel("ШИФРОВАНИЕ");
-        jLabel.setFont(new Font("Serif", Font.PLAIN, 24));
-        box1.add(jLabel);
-        JProgressBar progressBar2 = new JProgressBar();
-        progressBar2.setStringPainted(true);
-        progressBar2.setMinimum(0);
-        progressBar2.setMaximum((int) cel);
-        box1.add(progressBar2);
-        box1.setVisible(true);
         for (int q = 0; q < cel; q++) {
             if (q!=cel-1){
                 if (inputStream.available()<bufer) bufer= inputStream.available();
@@ -145,15 +137,9 @@ public class Dec {
                 byte[] message2 = cast.mes_2((byte[]) text1[0], ost,bufer);
                 fos.write(message2);
             }
-            progressBar2.setValue(q);
-
-
         }
-        box1.setVisible(false);
         fos.close();
         inputStream.close();
-
-
 
     }}
 
