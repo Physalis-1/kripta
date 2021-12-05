@@ -151,7 +151,6 @@ public class Main_window  {
 
                     Enc enc = new Enc(index, path2+"\\"+textField.getText().replaceAll(" ", ""), b, path1 , vector, ip, port, loginss, flag,jFrame1);
                     JFrame jFrame = new JFrame();
-                    JOptionPane.showMessageDialog(jFrame, "Успех!");
                 } catch (Exception e1) {
                     e1.printStackTrace();
                     JFrame jFrame = new JFrame();
@@ -240,7 +239,6 @@ public class Main_window  {
                     try {
                         Dec dec = new Dec(path2+"\\"+textField21.getText().replaceAll(" ", ""), path1,ip,port,loginss);
                         JFrame jFrame = new JFrame();
-                        JOptionPane.showMessageDialog(jFrame, "Успех!");
                     } catch (Exception e1) {
                         JFrame jFrame = new JFrame();
                         JOptionPane.showMessageDialog(jFrame, "!!!ERROR!!!");
