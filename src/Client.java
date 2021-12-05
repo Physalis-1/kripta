@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.lang.*;
@@ -8,7 +9,6 @@ public class Client {
         ArrayList<String> arrayList = new ArrayList<>(1);
         try{
             Socket socket=new Socket(ip,port);
-            System.out.println("client");
             DataOutputStream dout=new DataOutputStream(socket.getOutputStream());
             DataInputStream din=new DataInputStream(socket.getInputStream());
             for(int i = 0; i < mass.length; i++)
@@ -34,10 +34,14 @@ public class Client {
             socket.close();
         }
         catch(Exception e) {
+            JOptionPane.showMessageDialog(null, "Проблемы с подключением\n");
             arrayList.add("no");
             e.printStackTrace();
             return arrayList;
         }
     return arrayList;
      }
+
+
 }
+
