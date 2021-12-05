@@ -8,13 +8,15 @@ import java.io.File;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-public class Main_window extends JFrame {
+public class Main_window  {
     private String path1="";
     private String path2="";
     private Integer flag =0;
     Main_window(String ip, int port, String loginss)
     {
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        JFrame jFrame1 = new JFrame();
+        jFrame1.setDefaultCloseOperation(jFrame1.EXIT_ON_CLOSE);
+        JFrame jf= new JFrame();
         JPanel box = new JPanel(new VerticalLayout());
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
         tabbedPane.setFont(new Font("Serif", Font.PLAIN, 24));
@@ -57,7 +59,9 @@ public class Main_window extends JFrame {
                     path2=file.getPath().replaceAll(" ", "");;
                     la.setText("Местонахождение "+file.getPath());
 
-                }}});
+                }
+
+            }});
         box.add(but1);
 
         JLabel label12_1 = new JLabel("Тип объекта");
@@ -118,7 +122,6 @@ public class Main_window extends JFrame {
             public void actionPerformed(ActionEvent e)
             {
                 if ((textField.getText().replaceAll(" ", "").length()>0) && (path1.length()>0) && (path2.length()>0))  {
-
                     minButton.setEnabled(false);
                 int datchik = 0;
                 int index = Integer.parseInt(elements[combo.getSelectedIndex()]);
@@ -144,26 +147,14 @@ public class Main_window extends JFrame {
                 for (int i = 0; i < 8; i++) {
                     vector[i] = (byte) secretvector.getEncoded()[i];
                 }
-                System.out.println(vector.length);
-                System.out.println(path2);
-                System.out.println(textField.getText().replaceAll(" ", ""));
-                    System.out.println(b);
-                    System.out.println(path1);
-                    System.out.println(ip);
-                    System.out.println(port);
-                    System.out.println(loginss);
-                    System.out.println(flag);
-
                 try {
-                    Enc enc = new Enc(index, path2+"\\"+textField.getText().replaceAll(" ", ""), b, path1 , vector, ip, port, loginss, flag);
+
+                    Enc enc = new Enc(index, path2+"\\"+textField.getText().replaceAll(" ", ""), b, path1 , vector, ip, port, loginss, flag,jFrame1);
                     JFrame jFrame = new JFrame();
                     JOptionPane.showMessageDialog(jFrame, "Успех!");
                 } catch (Exception e1) {
                     e1.printStackTrace();
                     JFrame jFrame = new JFrame();
-                    System.out.println("nen");
-                    System.out.println(e1);
-                    System.out.println("nen");
                     JOptionPane.showMessageDialog(jFrame, "ERROR!!!");
                 }
                 minButton.setEnabled(true);
@@ -276,6 +267,9 @@ public class Main_window extends JFrame {
         JLabel lab3 = new JLabel(" * Для шифрования папки/директории создается zip архив" );
         JLabel lab4 = new JLabel(" * При расшифровывании папки/директории создается zip архив" );
         JLabel lab5 = new JLabel(" * Программа состоит из клиентской и серверной части");
+        JLabel lab6 = new JLabel(" * Программа поддерижвает пользовательские пароли любой длинны, однако ставя");
+        JLabel lab7 = new JLabel(" легкие пароли помните, что их легко взломать");
+        JLabel lab8 = new JLabel(" * Расшифровывая папки/директории нужно дописывать расширение zip");
 
         lab.setFont(new Font("Serif", Font.PLAIN, 24));
         lab1.setFont(new Font("Serif", Font.PLAIN, 15));
@@ -283,20 +277,27 @@ public class Main_window extends JFrame {
         lab3.setFont(new Font("Serif", Font.PLAIN, 15));
         lab4.setFont(new Font("Serif", Font.PLAIN, 15));
         lab5.setFont(new Font("Serif", Font.PLAIN, 15));
+        lab6.setFont(new Font("Serif", Font.PLAIN, 15));
+        lab7.setFont(new Font("Serif", Font.PLAIN, 15));
+        lab8.setFont(new Font("Serif", Font.PLAIN, 15));
+
         box2.add(lab);
         box2.add(lab1);
         box2.add(lab2);
         box2.add(lab3);
         box2.add(lab4);
         box2.add(lab5);
+        box2.add(lab6);
+        box2.add(lab7);
+        box2.add(lab8);
+
         box2.setBackground(Color.decode("#E6E6FA"));
         tabbedPane.addTab("СПРАВКА", box2);
         tabbedPane.setBackground(Color.decode("#E6E6FA"));
-//        tabbedPane.setBackground(Color.decode("#def5fa"));
-        getContentPane().add(tabbedPane);
-        setSize(800,650);
-        setResizable(false);
-        setVisible(true);
+        jFrame1.getContentPane().add(tabbedPane);
+        jFrame1.setSize(800,650);
+        jFrame1.setResizable(false);
+        jFrame1.show();
 
 
 
