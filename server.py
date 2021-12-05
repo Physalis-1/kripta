@@ -10,7 +10,6 @@ import sys
 import http.client
 from PyQt5 import QtGui, Qt
 lock = threading.RLock()
-# lock=threading.BoundedSemaphore(2)
 ip=""
 port=""
 
@@ -123,8 +122,6 @@ class Window(QWidget):
                     datchik = 3
                 elif datchik == 0 and ("flag4" in msg):
                     datchik = 4
-            print(datchik)
-            print(mass)
             lock.acquire()
             exit_mass=[]
             if datchik == 1:
@@ -145,8 +142,7 @@ class Window(QWidget):
                     exit_mass.append("error")
                     exit_mass.append("112")
                 else:
-                    print()
-                    print(rec)
+
                     for z in range (2,len(rec[0])):
                         exit_mass.append(rec[0][z])
                     exit_mass.append("ok")
@@ -173,9 +169,6 @@ class Window(QWidget):
                 else:
                     exit_mass.append("error")
                     exit_mass.append("112")
-            print(rec)
-            print(exit_mass)
-            print(conn)
             for i in range(0, len(exit_mass)):
                 message_to_send = exit_mass[i].encode("UTF-8")
                 conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
