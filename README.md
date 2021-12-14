@@ -12,8 +12,9 @@
 * В БД(database.db) данные хранятся в зашифрованном на логине пользователя виде (логин еще и захэширован) по алгоритму aes-256 ECB. 
 ***
 * Окно справки слева окна регистрации/вход,справа окна шифрования/дешифрования    
-![изображение](https://user-images.githubusercontent.com/84348788/144759068-7a2c05aa-03eb-4bbe-af1d-feff9bdb0d7d.png)
-![изображение](https://user-images.githubusercontent.com/84348788/144759099-3e5992b9-8e4c-4a3a-b39f-a48063409ff8.png)
+![изображение](https://user-images.githubusercontent.com/84348788/146087916-ef1f4e99-b2da-46ed-a7e9-445896befab1.png)
+![изображение](https://user-images.githubusercontent.com/84348788/146087963-a2bd413f-cce3-43dc-8b6a-3cb05bf0856f.png)
+
 
 * Вид интерфейса входа     
 ![изображение](https://user-images.githubusercontent.com/84348788/144759120-e194b6dc-34be-4911-8688-3b91fa474fb4.png)
