@@ -12,6 +12,7 @@ public class Enc {
     public Enc(int index, String name_file, byte[] key, String path1, byte[] vector, String ip, int port, String loginss, Integer flag, JFrame jFrame1) throws Exception {
 
         int k = 0;
+        long start = System.currentTimeMillis();
         Cast_enc castEnc = new Cast_enc(key);
         Object[] keys= castEnc.makeKey();
         int [] Km=(int[])keys[0];
@@ -97,7 +98,9 @@ public class Enc {
         massiv[7]=ae.aes_e(loginss,l1,String.valueOf(key.length));
         ArrayList<String> array =client.select(ip,port,massiv);
         if (array.get(0).equals("ok")) {
-            JOptionPane.showMessageDialog(null, "Данные добавлены в БД\n");
+            long finish = System.currentTimeMillis();
+            long elapsed = finish - start;
+            JOptionPane.showMessageDialog(null, "Данные добавлены в БД\nВремени потрачено:\n"+Long.toString(elapsed)+" нс");
         }
         else if (array.get(0).equals("error"))
         {
