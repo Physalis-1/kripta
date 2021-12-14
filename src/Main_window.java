@@ -150,7 +150,7 @@ public class Main_window  {
                 try {
 
                     Enc enc = new Enc(index, path2+"\\"+textField.getText().replaceAll(" ", ""), b, path1 , vector, ip, port, loginss, flag,jFrame1);
-                    JFrame jFrame = new JFrame();
+//                    JFrame jFrame = new JFrame();
                 } catch (Exception e1) {
                     e1.printStackTrace();
                     JFrame jFrame = new JFrame();
@@ -237,8 +237,13 @@ public class Main_window  {
             {minButton1.setEnabled(false);
                 if ((textField21.getText().replaceAll(" ", "").length()>0) && (path1.length()>0) && (path2.length()>0))  {
                     try {
+                        long start = System.currentTimeMillis();
                         Dec dec = new Dec(path2+"\\"+textField21.getText().replaceAll(" ", ""), path1,ip,port,loginss);
-                        JFrame jFrame = new JFrame();
+                        long finish = System.currentTimeMillis();
+                        long elapsed = finish - start;
+                        JOptionPane.showMessageDialog(null, "Завершено!\nВремени потрачено:\n"+Long.toString(elapsed)+" нс");
+
+                        //                        JFrame jFrame = new JFrame();
                     } catch (Exception e1) {
                         JFrame jFrame = new JFrame();
                         JOptionPane.showMessageDialog(jFrame, "!!!ERROR!!!");
@@ -268,6 +273,7 @@ public class Main_window  {
         JLabel lab6 = new JLabel(" * Программа поддерижвает пользовательские пароли любой длинны, однако ставя");
         JLabel lab7 = new JLabel(" легкие пароли помните, что их легко взломать");
         JLabel lab8 = new JLabel(" * Расшифровывая папки/директории нужно дописывать расширение zip");
+        JLabel lab18 = new JLabel(" * Имя файла/логина/папки не должно содержать пробелов");
 
         lab.setFont(new Font("Serif", Font.PLAIN, 24));
         lab1.setFont(new Font("Serif", Font.PLAIN, 15));
@@ -278,6 +284,7 @@ public class Main_window  {
         lab6.setFont(new Font("Serif", Font.PLAIN, 15));
         lab7.setFont(new Font("Serif", Font.PLAIN, 15));
         lab8.setFont(new Font("Serif", Font.PLAIN, 15));
+        lab18.setFont(new Font("Serif", Font.PLAIN, 15));
 
         box2.add(lab);
         box2.add(lab1);
@@ -288,6 +295,7 @@ public class Main_window  {
         box2.add(lab6);
         box2.add(lab7);
         box2.add(lab8);
+        box2.add(lab18);
 
         box2.setBackground(Color.decode("#E6E6FA"));
         tabbedPane.addTab("СПРАВКА", box2);
