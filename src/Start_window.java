@@ -226,6 +226,7 @@ public class Start_window extends JFrame {
         JLabel lab6 = new JLabel(" * Программа поддерижвает пользовательские пароли любой длинны, однако ставя");
         JLabel lab7 = new JLabel(" легкие пароли помните, что их легко взломать");
         JLabel lab8 = new JLabel(" * Расшифровывая папки/директории нужно дописывать расширение zip");
+        JLabel lab18 = new JLabel(" * Имя файла/логина/папки не должно содержать пробелов");
 
         lab.setFont(new Font("Serif", Font.PLAIN, 24));
         lab1.setFont(new Font("Serif", Font.PLAIN, 15));
@@ -236,6 +237,7 @@ public class Start_window extends JFrame {
         lab6.setFont(new Font("Serif", Font.PLAIN, 15));
         lab7.setFont(new Font("Serif", Font.PLAIN, 15));
         lab8.setFont(new Font("Serif", Font.PLAIN, 15));
+        lab18.setFont(new Font("Serif", Font.PLAIN, 15));
 
         box2.add(lab);
         box2.add(lab1);
@@ -246,6 +248,7 @@ public class Start_window extends JFrame {
         box2.add(lab6);
         box2.add(lab7);
         box2.add(lab8);
+        box2.add(lab18);
 
         box2.setBackground(Color.decode("#E6E6FA"));
         tabbedPane.addTab("СПРАВКА", box2);
