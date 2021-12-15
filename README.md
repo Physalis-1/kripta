@@ -22,6 +22,9 @@
 * Результат NIST тестирования шифрофайла       
 ![изображение](https://user-images.githubusercontent.com/84348788/146089165-8be98973-30a0-4316-9d56-c57309990d51.png)
 
+* Результат NIST тестирования ключа     
+![изображение](https://user-images.githubusercontent.com/84348788/146232802-958bfaee-dae5-4064-8249-43adf4c6b500.png)
+
 
 * Окно справки слева окна регистрации/вход,справа окна шифрования/дешифрования    
 ![изображение](https://user-images.githubusercontent.com/84348788/146087916-ef1f4e99-b2da-46ed-a7e9-445896befab1.png)
